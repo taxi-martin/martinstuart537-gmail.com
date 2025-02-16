@@ -1,0 +1,14 @@
+contents/
+node_modules/
+server/nav.json
+server/lunr_index.json
+npm-debug.log
+static/dist
+
+.#*
+
+.DS_Store
+*.swp
+*.swo
+tmp
+docs_env
