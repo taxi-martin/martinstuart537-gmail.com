@@ -1,0 +1,10 @@
+[
+  {
+    "id": "2.x",
+    "name": "balenaOS 2.x"
+  },
+  {
+    "id": "1.x",
+    "name": "resinOS 1.x"
+  }
+]
