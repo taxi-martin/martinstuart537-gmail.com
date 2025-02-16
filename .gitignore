@@ -1,0 +1,12 @@
+contents/
+node_modules/
+server/nav.json
+npm-debug.log
+static/dist
+
+.#*
+
+.DS_Store
+*.swp
+*.swo
+tmp
