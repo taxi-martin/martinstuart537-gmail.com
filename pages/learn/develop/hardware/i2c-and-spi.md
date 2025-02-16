@@ -20,7 +20,6 @@ title: I2C and Other Interfaces
   * [MRAA for GPIO and hardware access](/hardware/i2c-and-spi#mraa-for-gpio-and-hardware-access)
   * [Edison in USB Host mode](/hardware/i2c-and-spi#edison-in-usb-host-mode)
 * [IOT-GATE-iMX8](/hardware/i2c-and-spi#iot-gate-imx8)
-* [Up Squared](/hardware/i2c-and-spi#up-squared)
   * [Serial ports](/hardware/i2c-and-spi#serial-ports)
 * [Jetson Devices](/hardware/i2c-and-spi#jetson-devices)
   * [Custom device trees](/hardware/i2c-and-spi#custom-device-trees)
@@ -263,7 +262,7 @@ The best and easiest way to interface with GPIO, I2C, SPI or UART on the Intel E
 [MRAA library][mraa-link], this library gives you a simple way to write C, python or Node.js applications that
 interact directly with the Edison hardware.
 
-If you use our [{{ $names.base_images.lib }}/intel-edison-node][dockerbase-node] or [{{ $names.base_images.lib }}/intel-edison-python][dockerbase-python] base images in your applications, you will automatically have the mraa setup correctly for node.js or python respectively.
+If you use our [{{ $names.base_images.lib }}/edison-node][dockerbase-node] or [{{ $names.base_images.lib }}/edison-python][dockerbase-python] base images in your applications, you will automatically have the mraa setup correctly for node.js or python respectively.
 
 Have a look at this [python example](https://github.com/shaunmulligan/hello-python-edison) or this [node.js example](https://github.com/shaunmulligan/edison-blink-node) to get started.
 
@@ -313,12 +312,6 @@ uart_mode=rs232
 
 Similarly, rs485 can be selected in the environment file as well. The device should be rebooted after setting the uart operating mode the for the changes to take effect.
 
-## Up Squared
-
-### Serial Ports
-
-Depending on the HAT Configuration defined in BIOS, the Up Squared UART communication on pins 8 and 10 can be performed using either /dev/ttyS4 or /dev/ttyS5. Please consult the HAT Configurations menu in BIOS for details on how pins are configured on your device.
-
 ## Jetson Devices
 
 ### Custom device trees
@@ -356,7 +349,7 @@ After the custom device tree has been validated, it can be included in newer bal
 [picamera-link]:{{ $links.githubLabs }}/balena-rpi-python-picamera
 [mraa-link]:https://github.com/intel-iot-devkit/mraa
 [upm-link]:https://github.com/intel-iot-devkit/upm
-[dockerbase-node]:https://hub.docker.com/r/{{ $names.base_images.lib }}/intel-edison-node/
-[dockerbase-python]:https://hub.docker.com/r/{{ $names.base_images.lib }}/intel-edison-python/
+[dockerbase-node]:https://hub.docker.com/r/{{ $names.base_images.lib }}/edison-node/
+[dockerbase-python]:https://hub.docker.com/r/{{ $names.base_images.lib }}/edison-python/
 [dt-params]:/reference/OS/advanced/#setting-device-tree-overlays-dtoverlay-and-parameters-dtparam
 [device-configuration]:/learn/manage/configuration/#device-configuration-management
