@@ -1,0 +1,1078 @@
+[
+  {
+    "id": "fleet",
+    "name": "Fleet",
+    "fields": [
+      "id",
+      "uuid",
+      "organization",
+      "depends_on__application",
+      "actor",
+      "app_name",
+      "slug",
+      "should_be_running__release",
+      "application_type",
+      "is_for__device_type",
+      "should_track_latest_release",
+      "is_accessible_by_support_until__date",
+      "is_public",
+      "is_host",
+      "is_archived",
+      "is_discoverable",
+      "is_stored_at__repository_url",
+      "created_at"
+    ],
+    "examples": [
+      {
+        "id": "get-all-apps",
+        "summary": "Get all fleets",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application",
+        "filters": ""
+      },
+      {
+        "id": "get-my-apps",
+        "summary": "Get all fleets associated with authenticated user",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application",
+        "filters": "?\\$filter=is_directly_accessible_by__user/any(dau:1%20eq%201)"
+      },
+      {
+        "id": "app-by-id",
+        "summary": "Get fleet by ID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "app-by-name",
+        "summary": "Get fleet by name",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application",
+        "filters": "?\\$filter=app_name%20eq%20'<NAME>'"
+      },
+      {
+        "id": "app-with-devices",
+        "summary": "Get fleet by id along with its devices",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": "?\\$expand=owns__device"
+      },
+      {
+        "id": "app-filter-public",
+        "summary": "Filter public fleets from result",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application",
+        "filters": "?\\$filter=is_public%20eq%20false"
+      },
+      {
+        "id": "create-app",
+        "summary": "Create fleet",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/application",
+        "filters": "",
+        "data": "{\n    \"app_name\": \"<NAME>\",\n    \"device_type\": \"<DEVICE TYPE>\"\n}"
+      },
+      {
+        "id": "delete-app",
+        "summary": "Delete fleet",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "disable-auto-update",
+        "summary": "Disable automatic update tracking for a fleet",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": "",
+        "data": "{\n    \"should_track_latest_release\": \"false\"\n}"
+      },
+      {
+        "id": "enable-auto-update",
+        "summary": "Enable automatic update tracking for a fleet",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": "",
+        "data": "{\n    \"should_track_latest_release\": \"true\"\n}"
+      },
+      {
+        "id": "set-commit",
+        "summary": "Pin entire fleet to a specific release",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application(<ID>)",
+        "filters": "",
+        "data": "{\n    \"should_be_running__release\": \"<RELEASE ID>\"\n    \"should_track_latest_release\": false\n}"
+      }
+    ]
+  },
+  {
+    "id": "fleet_membership_role",
+    "name": "Fleet membership role",
+    "fields": [
+      "id",
+      "name"
+    ],
+    "examples": [
+      {
+        "id": "get-fleet-membership_role",
+        "summary": "Get all fleet membership roles",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application_membership_role",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "fleet_tag",
+    "name": "Fleet tag",
+    "fields": [
+      "id",
+      "application",
+      "tag_key",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-fleet-tags",
+        "summary": "Get all tags by fleet name",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application_tag",
+        "filters": "?\\$filter=application/app_name%20eq%20'<NAME>'"
+      },
+      {
+        "id": "create-fleet-tag",
+        "summary": "Create a new fleet tag",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/application_tag",
+        "filters": "",
+        "data": "{\n    \"application\": \"<FLEET ID>\",\n    \"tag_key\": \"<KEY>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-fleet-tag",
+        "summary": "Update a fleet tag",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application_tag/(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-fleet-tag",
+        "summary": "Delete a fleet tag",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/application_tag/(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "api_key",
+    "name": "API key",
+    "fields": [
+      "id",
+      "created_at",
+      "is_of__actor",
+      "name",
+      "description"
+    ],
+    "examples": [
+      {
+        "id": "get-api-keys",
+        "summary": "Get all API keys",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/api_key",
+        "filters": ""
+      },
+      {
+        "id": "create-api-key",
+        "summary": "Create new API key",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/api-key/user/full",
+        "filters": "",
+        "data": "{\n    \"name\": \"<NAME>\",\n    \"description\": \"<DESCRIPTION>\"\n}"
+      }
+    ]
+  },
+  {
+    "id": "device",
+    "name": "Device",
+    "fields": [
+      "id",
+      "belongs_to__application",
+      "belongs_to__user",
+      "is_managed_by__device",
+      "actor",
+      "should_be_running__release",
+      "device_name",
+      "is_of__device_type",
+      "uuid",
+      "is_running__release",
+      "note",
+      "local_id",
+      "status",
+      "is_online",
+      "last_connectivity_event",
+      "is_connected_to_vpn",
+      "last_vpn_event",
+      "ip_address",
+      "mac_address",
+      "public_address",
+      "os_version",
+      "os_variant",
+      "supervisor_version",
+      "should_be_managed_by__supervisor_release",
+      "is_managed_by__service_instance",
+      "provisioning_progress",
+      "provisioning_state",
+      "download_progress",
+      "is_web_accessible",
+      "longitude",
+      "latitude",
+      "location",
+      "custom_longitude",
+      "custom_latitude",
+      "logs_channel",
+      "is_locked_until__date",
+      "is_accessible_by_support_until__date",
+      "created_at",
+      "is_active",
+      "api_heartbeat_state",
+      "memory_usage",
+      "memory_total",
+      "storage_block_device",
+      "storage_usage",
+      "storage_total",
+      "cpu_temp",
+      "cpu_usage",
+      "cpu_id",
+      "is_undervolted"
+    ],
+    "examples": [
+      {
+        "id": "get-devices",
+        "summary": "Get all devices",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device",
+        "filters": ""
+      },
+      {
+        "id": "devices-by-fleet",
+        "summary": "Get all devices by fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device",
+        "filters": "?\\$filter=belongs_to__application%20eq%20'<FLEET ID>'"
+      },
+      {
+        "id": "device-by-id",
+        "summary": "Get device by ID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "device-by-uuid",
+        "summary": "Get device by UUID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device",
+        "filters": "?\\$filter=uuid%20eq%20'<UUID>'"
+      },
+      {
+        "id": "rename-device",
+        "summary": "Rename device",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "",
+        "data": "{\n    \"device_name\": \"<NEW NAME>\"\n}"
+      },
+      {
+        "id": "delete-device",
+        "summary": "Delete device",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "add-note",
+        "summary": "Add note to a device",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "",
+        "data": "{\n    \"note\": \"<NEW NOTE>\"\n}"
+      },
+      {
+        "id": "move-device",
+        "summary": "Move device to another fleet",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "",
+        "data": "{\n    \"belongs_to__application\": \"<FLEET ID>\"\n}"
+      },
+      {
+        "id": "get-target-release",
+        "summary": "Get the release device is pinned to",
+        "description": "Note: should_be_running__release will be unset or null if the device isn't pinned to any release. For an unpinned device, the device.is_running__release field may be used to obtain the device's current state.",
+        "method": "GET",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "?\\$select=should_be_running__release",
+        "data": ""
+      },
+      {
+        "id": "set-device-to-release",
+        "summary": "Pin device to a specific release",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "",
+        "data": "{\n    \"should_be_running__release\": \"<RELEASE ID>\"\n}"
+      },
+      {
+        "id": "deactivate-device",
+        "summary": "Deactivate an offline device (CHARGEABLE)",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device(<ID>)",
+        "filters": "",
+        "data": "{\n    \"is_active\": false\n}"
+      }
+    ]
+  },
+  {
+    "id": "device_config_variable",
+    "name": "Device config variable",
+    "fields": [
+      "id",
+      "device",
+      "value",
+      "name"
+    ],
+    "examples": [
+      {
+        "id": "get-device-config-vars",
+        "summary": "Get all device config variables for a device",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device_config_variable",
+        "filters": "?\\$filter=device%20eq%20<DEVICE ID>"
+      },
+      {
+        "id": "create-device-config-var",
+        "summary": "Create a device config variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/device_config_variable",
+        "filters": "",
+        "data": "{\n    \"device\": \"<DEVICE ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-device-config-var",
+        "summary": "Update a device config variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device_config_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-device-config-var",
+        "summary": "Remove a device config variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/device_config_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "device_environment_variable",
+    "name": "Device Environment Variable",
+    "fields": [
+      "id",
+      "created_at",
+      "device",
+      "name",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-device-env-vars",
+        "summary": "Get all device environment variables for a device",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device_environment_variable",
+        "filters": "?\\$filter=device%20eq%20<DEVICE ID>"
+      },
+      {
+        "id": "create-device-env-var",
+        "summary": "Create a device environment variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/device_environment_variable",
+        "filters": "",
+        "data": "{\n    \"device\": \"<DEVICE ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-device-env-var",
+        "summary": "Update a device environment variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device_environment_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-device-env-var",
+        "summary": "Remove a device environment variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/device_environment_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "device_service_environment_variable",
+    "name": "Device service variable",
+    "fields": [
+      "id",
+      "created_at",
+      "service_install",
+      "value",
+      "name"
+    ],
+    "examples": [
+      {
+        "id": "get-device-service-vars",
+        "summary": "Get all service variables for a device",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device_service_environment_variable",
+        "filters": "?\\$filter=service_install/device%20eq%20<DEVICE ID>"
+      },
+      {
+        "id": "create-device-service-var",
+        "summary": "Create a device service variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/device_service_environment_variable",
+        "filters": "",
+        "data": "{\n    \"service_install\": \"<SERVICE INSTALL ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-device-service-var",
+        "summary": "Update a device service variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device_service_environment_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-device-service-var",
+        "summary": "Remove a device service variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/device_service_environment_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "device_tag",
+    "name": "Device tag",
+    "fields": [
+      "id",
+      "device",
+      "tag_key",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-tags",
+        "summary": "Get all tags by device UUID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/device_tag",
+        "filters": "?\\$filter=device/uuid%20eq%20'<UUID>'"
+      },
+      {
+        "id": "create-tag",
+        "summary": "Create a new device tag",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/device_tag",
+        "filters": "",
+        "data": "{\n    \"device\": \"<DEVICE ID>\",\n    \"tag_key\": \"<KEY>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-tag",
+        "summary": "Update a device tag",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/device_tag",
+        "filters": "?\\$filter=device/uuid%20eq%20'<UUID>'",
+        "data": "{\n    \"tag_key\": \"<EXISTING-KEY>\",\n    \"value\": \"<NEW-VALUE>\"\n}"
+      },
+      {
+        "id": "delete-tag",
+        "summary": "Delete a device tag given its database ID",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/device_tag(<TAG-ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "fleet_config_variable",
+    "name": "Fleet config variable",
+    "fields": [
+      "id",
+      "application",
+      "name",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-fleet-config-vars",
+        "summary": "Get all fleet config variables for a fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application_config_variable",
+        "filters": "?\\$filter=application%20eq%20<FLEET ID>"
+      },
+      {
+        "id": "create-fleet-config-var",
+        "summary": "Create a fleet config variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/application_config_variable",
+        "filters": "",
+        "data": "{\n    \"application\": \"<FLEET ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-fleet-config-var",
+        "summary": "Update a fleet environment variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application_config_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-fleet-config-var",
+        "summary": "Remove a fleet config variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/application_config_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "fleet_environment_variable",
+    "name": "Fleet environment variable",
+    "fields": [
+      "id",
+      "created_at",
+      "application",
+      "name",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-fleet-env-vars",
+        "summary": "Get all fleet environment variables for a fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/application_environment_variable",
+        "filters": "?\\$filter=application%20eq%20<FLEET ID>"
+      },
+      {
+        "id": "create-fleet-env-var",
+        "summary": "Create a fleet environment variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/application_environment_variable",
+        "filters": "",
+        "data": "{\n    \"application\": \"<FLEET ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-fleet-env-var",
+        "summary": "Update a fleet environment variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/application_environment_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-fleet-env-var",
+        "summary": "Remove a fleet environment variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/application_environment_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "service_environment_variable",
+    "name": "Fleet service variable",
+    "fields": [
+      "id",
+      "created_at",
+      "service_install",
+      "value",
+      "name"
+    ],
+    "examples": [
+      {
+        "id": "get-fleet-service-vars",
+        "summary": "Get all fleet service variables for a service",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/service_environment_variable",
+        "filters": "?\\$filter=service%20eq%20<SERVICE ID>"
+      },
+      {
+        "id": "create-fleet-service-var",
+        "summary": "Create a fleet service variable",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/service_environment_variable",
+        "filters": "",
+        "data": "{\n    \"service\": \"<SERVICE ID>\",\n    \"name\": \"<NAME>\",\n    \"value\": \"<VALUE>\"\n}"
+      },
+      {
+        "id": "update-fleet-service-var",
+        "summary": "Update a device service variable",
+        "description": "",
+        "method": "PATCH",
+        "endpoint": "/v6/service_environment_variable(<ID>)",
+        "filters": "",
+        "data": "{\n    \"value\": \"<NEW VALUE>\"\n}"
+      },
+      {
+        "id": "delete-fleet-service-var",
+        "summary": "Remove a fleet service variable",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/service_environment_variable(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "organization",
+    "name": "Organization",
+    "fields": [
+      "id",
+      "created_at",
+      "name",
+      "handle",
+      "company_name",
+      "website",
+      "industry",
+      "billing_account_code"
+    ],
+    "examples": [
+      {
+        "id": "get-all-orgs",
+        "summary": "Get all organizations associated with authenticated user",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/organization",
+        "filters": ""
+      },
+      {
+        "id": "org-by-id",
+        "summary": "Get organization by ID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/organization(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "org-by-handle",
+        "summary": "Get organization by handle",
+        "description": "Uniquely identifies an organization. Handles are currently automatically generated and read-only.",
+        "method": "GET",
+        "endpoint": "/v6/organization",
+        "filters": "?\\$filter=handle%20eq%20'<HANDLE>'"
+      }
+    ]
+  },
+  {
+    "id": "organization_membership",
+    "name": "Organization Membership",
+    "fields": [
+      "id",
+      "created_at",
+      "user",
+      "is_member_of__organization",
+      "organization_membership_role",
+      "effective_seat_role"
+    ],
+    "examples": [
+      {
+        "id": "get-organization-memberships",
+        "summary": "Get all organization memberships",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/organization_membership",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "release",
+    "name": "Release",
+    "fields": [
+      "id",
+      "created_at",
+      "belongs_to__application",
+      "is_created_by__user",
+      "commit",
+      "composition",
+      "status",
+      "source",
+      "build_log",
+      "start_timestamp",
+      "end_timestamp",
+      "update_timestamp",
+      "is_invalidated",
+      "release_version",
+      "contract"
+    ],
+    "examples": [
+      {
+        "id": "releases-in-fleet",
+        "summary": "Get all releases for a fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/release",
+        "filters": "?\\$filter=belongs_to__application%20eq%20<FLEET ID>"
+      },
+      {
+        "id": "release-from-fleet-and-commit",
+        "summary": "Get a release ID given a specific fleet and commit",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/release",
+        "filters": "?\\$filter=belongs_to__application%20eq%20<FLEET ID>%20and%20commit%20eq%20'<COMMIT HASH>'&\\$select=id"
+      }
+    ]
+  },
+  {
+    "id": "release_tag",
+    "name": "Release tag",
+    "fields": [
+      "id",
+      "release",
+      "tag_key",
+      "value"
+    ],
+    "examples": [
+      {
+        "id": "get-release-tags",
+        "summary": "Get all tags by release commit",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/release_tag",
+        "filters": "?\\$filter=release/commit%20eq%20'<COMMIT>'"
+      },
+      {
+        "id": "create-release-tag",
+        "summary": "Create a new release tag",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/release_tag",
+        "filters": "",
+        "data": "{\n    \"release\": \"<RELEASE ID>\",\n    \"tag_key\": \"<KEY>\",\n    \"value\": \"<VALUE>\"\n}"
+      }
+    ]
+  },
+  {
+    "id": "user__has__public_key",
+    "name": "SSH key",
+    "fields": [
+      "id",
+      "user",
+      "title",
+      "public_key",
+      "created_at"
+    ],
+    "examples": [
+      {
+        "id": "get-ssh-keys",
+        "summary": "Get all SSH keys",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/user__has__public_key",
+        "filters": ""
+      },
+      {
+        "id": "ssh-keys-by-id",
+        "summary": "Get SSH key by ID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/user__has__public_key(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "new-ssh-key",
+        "summary": "Add new SSH key to account",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/user__has__public_key",
+        "filters": "",
+        "data": "{\n    \"public_key\": \"<SSH KEY>\",\n    \"title\": \"<TITLE>\",\n    \"user\": \"<USER ID>\"\n}"
+      },
+      {
+        "id": "remove-ssh-key",
+        "summary": "Remove SSH key",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/user__has__public_key(<ID>)",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "service",
+    "name": "Service",
+    "fields": [
+      "id",
+      "created_at",
+      "application",
+      "service_name"
+    ],
+    "examples": [
+      {
+        "id": "services-of-fleet",
+        "summary": "Get all services belonging to a fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/service",
+        "filters": "?\\$filter=application/app_name%20eq%20'<FLEET NAME>'"
+      }
+    ]
+  },
+  {
+    "id": "service_install",
+    "name": "Service install",
+    "fields": [
+      "id",
+      "created_at",
+      "device",
+      "installs__service"
+    ],
+    "examples": [
+      {
+        "id": "service-name-by-device",
+        "summary": "Get service name for all services on a device",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/service_install",
+        "filters": "?\\$filter=device/uuid%20eq%20'<DEVICE UUID>'&\\$expand=installs__service(\\$select=service_name)"
+      }
+    ]
+  },
+  {
+    "id": "supervisor_release",
+    "name": "Supervisor release",
+    "fields": [
+      "id",
+      "supervisor_version",
+      "is_for__device_type",
+      "image_name"
+    ],
+    "examples": [
+      {
+        "id": "get-supervisor-releases",
+        "summary": "Get all supervisor releases for a device type",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/supervisor_release",
+        "filters": "?\\$filter=device_type%20eq%20'<DEVICE TYPE>'"
+      }
+    ]
+  },
+  {
+    "id": "user",
+    "name": "User",
+    "fields": [
+      "id",
+      "actor",
+      "username",
+      "created_at"
+    ],
+    "examples": [
+      {
+        "id": "get-users",
+        "summary": "Get users associated with account",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/user",
+        "filters": ""
+      },
+      {
+        "id": "get-users-fleet",
+        "summary": "Get users associated with fleet",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/user__is_member_of__application",
+        "filters": "?\\$expand=user(\\$select=id,username,actor),application_membership_role(\\$select=id,name,actor)&\\$filter=is_member_of__application%20eq%20<ID>"
+      },
+      {
+        "id": "create-fleet-membership",
+        "summary": "Create fleet membership",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/user__is_member_of__application",
+        "filters": "",
+        "data": "{\n    \"is_member_of_application\": <ID>,\n    \"username\": \"<USERNAME>\",\n    \"application_membership_role\": <ROLE ID>\n}"
+      },
+      {
+        "id": "delete-fleet-membership",
+        "summary": "Delete fleet membership",
+        "description": "",
+        "method": "DELETE",
+        "endpoint": "/v6/user__is_member_of__application",
+        "filters": "?\\$filter=is_member_of__application%20eq%20<ID>%20and%20user%20eq%20<USER ID>"
+      }
+    ]
+  },
+  {
+    "id": "team",
+    "name": "Team",
+    "fields": [
+      "id",
+      "created_at",
+      "name",
+      "description",
+      "belongs_to__organization"
+    ],
+    "examples": [
+      {
+        "id": "get-teams",
+        "summary": "Get all teams associated with user",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/team",
+        "filters": ""
+      },
+      {
+        "id": "get-team-by-id",
+        "summary": "Get team by ID",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/team(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "delete-team",
+        "summary": "Delete team with ID",
+        "description": "",
+        "method": "Delete",
+        "endpoint": "/v6/team(<ID>)",
+        "filters": ""
+      },
+      {
+        "id": "create-team",
+        "summary": "Create a new team in organization",
+        "description": "",
+        "method": "POST",
+        "endpoint": "/v6/team",
+        "filters": "",
+        "data": "{\n    \"name\": \"<TEAM NAME>\",\n    \"belongs_to__organization\": \"<ORG ID>\"\n}"
+      }
+    ]
+  },
+  {
+    "id": "team_fleet_access",
+    "name": "Team Fleet Access",
+    "fields": [
+      "id",
+      "created_at",
+      "team",
+      "grants_access_to__application",
+      "application_membership_role"
+    ],
+    "examples": [
+      {
+        "id": "get-team-fleet-access",
+        "summary": "Get Team's fleet access",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/team_application_access",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "team_membership",
+    "name": "Team Membership",
+    "fields": [
+      "id",
+      "created_at",
+      "user",
+      "is_member_of__team"
+    ],
+    "examples": [
+      {
+        "id": "get-team-membership",
+        "summary": "Get team membership of users",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/v6/team_membership",
+        "filters": ""
+      }
+    ]
+  },
+  {
+    "id": "whoami",
+    "name": "Who am I",
+    "fields": [
+      "id",
+      "username",
+      "email"
+    ],
+    "examples": [
+      {
+        "id": "whoami",
+        "summary": "Get user associated with token",
+        "description": "",
+        "method": "GET",
+        "endpoint": "/user/v1/whoami",
+        "filters": ""
+      }
+    ]
+  }
+]
